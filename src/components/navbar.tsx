@@ -4,34 +4,49 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 
 const navLinks = [
-  { name: "About", href: "/about" },
+  { name: "About",     href: "/about" },
   { name: "Portfolio", href: "/portfolio" },
-  { name: "Work", href: "/work" },
-  { name: "Team", href: "/team" },
-  { name: "Contact", href: "/contact" },
+  { name: "Work",      href: "/work" },
+  { name: "Team",      href: "/team" },
+  { name: "Contact",   href: "/contact" },
 ];
 
-function WrkrLogo({ dark = false }: { dark?: boolean }) {
+function Mark({ size = 28, color = "currentColor" }: { size?: number; color?: string }) {
   return (
-    <Link href="/" className="flex items-center gap-2.5">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M3 4 L3 14 Q3 20 11 20 Q19 20 19 14 L19 4"
-          stroke={dark ? "#ffffff" : "#1B2068"}
-          strokeWidth="2.5"
-          fill="none"
-          strokeLinecap="round"
-        />
-      </svg>
+    <svg width={size} height={size} viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <path
+        d="M14 14 L14 36 C14 46 22 52 32 52 C42 52 50 46 50 36 L50 14"
+        stroke={color}
+        strokeWidth="6"
+        strokeLinecap="square"
+        fill="none"
+      />
+      <circle cx="50" cy="14" r="5" fill={color} />
+    </svg>
+  );
+}
+
+function WrkrLogo({ dark = false }: { dark?: boolean }) {
+  const indigo = "#23258c";
+  const color = dark ? "#ffffff" : indigo;
+  return (
+    <Link href="/" className="inline-flex items-center gap-3" aria-label="WRKR — home">
+      <Mark size={26} color={color} />
       <div className="flex flex-col leading-none">
-        <span className={cn("text-base font-black tracking-tight", dark ? "text-white" : "text-primary")}>
+        <span
+          className="text-[18px] font-[800] tracking-[-0.02em]"
+          style={{ fontFamily: "'Gilroy','Inter',sans-serif", color }}
+        >
           WRKR
         </span>
-        <span className={cn("text-[8px] font-semibold tracking-[0.18em] uppercase", dark ? "text-white/50" : "text-gray-400")}>
-          Holding Co.
+        <span
+          className="text-[8.5px] font-semibold tracking-[0.32em] uppercase"
+          style={{ color: dark ? "rgba(255,255,255,0.7)" : "#6b6e88", marginTop: 1 }}
+        >
+          HOLDING&nbsp;CO.
         </span>
       </div>
     </Link>
@@ -43,19 +58,29 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100 px-6 py-3">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 border-b"
+      style={{
+        background: "rgba(247,246,241,0.92)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        borderBottomColor: "#efeee7",
+      }}
+    >
+      <div className="max-w-[1280px] mx-auto flex items-center gap-8 px-8 py-4">
         <WrkrLogo />
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-7 flex-1 ml-6">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-primary",
-                pathname === link.href ? "text-primary font-semibold" : "text-gray-600"
+                "text-[14px] font-medium pb-0.5 border-b-2 transition-colors",
+                pathname === link.href
+                  ? "text-[#23258c] border-[#23258c]"
+                  : "text-[#0e0e1a] border-transparent hover:text-[#23258c]"
               )}
             >
               {link.name}
@@ -63,19 +88,26 @@ export function Navbar() {
           ))}
         </div>
 
-        <div className="hidden md:flex">
+        <div className="hidden md:flex ml-auto">
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 text-sm font-semibold hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 text-[13px] font-[800] text-white rounded-[6px] transition-colors"
+            style={{
+              fontFamily: "'Gilroy','Inter',sans-serif",
+              background: "#23258c",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#1c1d70")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "#23258c")}
           >
-            Get in touch <ArrowRight size={14} />
+            Get in touch <ArrowRight size={13} />
           </Link>
         </div>
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden text-primary"
+          className="md:hidden ml-auto text-[#23258c]"
           onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle menu"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -83,7 +115,10 @@ export function Navbar() {
 
       {/* Mobile Nav */}
       {isOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-gray-100 p-6 flex flex-col gap-4 shadow-xl">
+        <div
+          className="md:hidden absolute top-full left-0 right-0 border-b p-6 flex flex-col gap-4 shadow-lg"
+          style={{ background: "#f7f6f1", borderBottomColor: "#efeee7" }}
+        >
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -91,7 +126,7 @@ export function Navbar() {
               onClick={() => setIsOpen(false)}
               className={cn(
                 "text-base font-medium py-1",
-                pathname === link.href ? "text-primary font-semibold" : "text-gray-600"
+                pathname === link.href ? "text-[#23258c] font-semibold" : "text-[#0e0e1a]"
               )}
             >
               {link.name}
@@ -99,7 +134,9 @@ export function Navbar() {
           ))}
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center gap-2 bg-primary text-white px-5 py-3 text-sm font-semibold mt-2"
+            onClick={() => setIsOpen(false)}
+            className="inline-flex items-center justify-center gap-2 text-white px-5 py-3 text-sm font-bold mt-2 rounded-[6px]"
+            style={{ background: "#23258c", fontFamily: "'Gilroy','Inter',sans-serif" }}
           >
             Get in touch <ArrowRight size={14} />
           </Link>

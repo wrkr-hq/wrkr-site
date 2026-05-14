@@ -1,63 +1,98 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Landmark, FileText, Settings, LineChart } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { FadeIn } from "@/components/fade-in";
 
 export default function WorkPage() {
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="pt-40 pb-24 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
+
+      {/* HERO */}
+      <section
+        className="px-8"
+        style={{ paddingTop: 112, paddingBottom: 64, background: "#f7f6f1", borderBottom: "1px solid #efeee7" }}
+      >
+        <div className="max-w-[1280px] mx-auto">
           <FadeIn>
-            <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-4">Government Work</p>
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-primary mb-8 leading-[0.8]">
-              Digital public infrastructure for <span className="text-[#1847F0]">African governments.</span>
+            <div
+              className="inline-block mb-8 pl-4 text-[11px] font-[800] tracking-[0.28em] uppercase"
+              style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#23258c", borderLeft: "2px solid #23258c" }}
+            >
+              Government Work
+            </div>
+            <h1
+              className="font-[800] leading-[1.05] tracking-[-0.028em] mb-6"
+              style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: "clamp(44px,6vw,64px)", color: "#0e0e1a", maxWidth: "18ch" }}
+            >
+              Digital public infrastructure for African governments.
             </h1>
-            <p className="text-xl text-gray-600 max-w-2xl leading-relaxed">
-              Advisors, implementation, and co-investment in public projects.
+            <p className="text-[19px] leading-[1.6] max-w-[660px]" style={{ color: "#3b3e5e" }}>
+              Advisory, implementation, and co-investment in public projects.
             </p>
           </FadeIn>
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="py-24 px-6 bg-[#F8F9FA]">
-        <div className="max-w-7xl mx-auto">
-          <FadeIn className="mb-16">
-            <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-2">Our Services</p>
-            <h2 className="text-4xl font-bold text-primary tracking-tighter">What we do for governments.</h2>
+      {/* FOUR PILLARS */}
+      <section className="py-20 px-8" style={{ background: "#f7f6f1", borderBottom: "1px solid #efeee7" }}>
+        <div className="max-w-[1280px] mx-auto">
+          <FadeIn className="mb-8">
+            <div
+              className="inline-flex items-center gap-3 text-[11px] font-[800] tracking-[0.22em] uppercase mb-5"
+              style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#23258c" }}
+            >
+              <span style={{ width: 24, height: 2, background: "#23258c", display: "inline-block" }} />
+              What we do for governments
+            </div>
           </FadeIn>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-gray-200 border border-gray-200 shadow-sm">
+          <div
+            className="grid grid-cols-1 md:grid-cols-2"
+            style={{ border: "1px solid #efeee7", background: "#fff" }}
+          >
             {[
               {
+                num:   "01",
                 title: "Digital Public Infrastructure.",
-                desc: "Designing and implementing digital service platforms — identity, payments, and record systems — that change how governments deliver to citizens.",
-                icon: Landmark
+                body:  "Designing and implementing digital service platforms — identity systems, licensing, permits — that change how governments deliver to citizens.",
               },
               {
+                num:   "02",
                 title: "Digital Payment Solutions.",
-                desc: "Integrated payment systems for government revenue collection and disbursement. Lower transaction costs, higher transparency.",
-                icon: Settings
+                body:  "Integrated payment systems for government revenue collection and disbursement. Lower transaction costs, higher transparency.",
               },
               {
+                num:   "03",
                 title: "Policy & Regulatory Advisory.",
-                desc: "Policy development, governance frameworks, and regulatory strategy that balances innovation with public protection.",
-                icon: FileText
+                body:  "Policy development, governance frameworks, and regulatory strategy that balances innovation with public protection.",
               },
               {
+                num:   "04",
                 title: "Implementation & Capacity Building.",
-                desc: "Knowledge transfer and local capability building so digital transformation outlasts any single engagement.",
-                icon: LineChart
-              }
-            ].map((service, i) => (
-              <FadeIn key={service.title} delay={i * 0.1}>
-                <div className="bg-white p-12 h-full space-y-6 hover:bg-gray-50 transition-colors group">
-                  <div className="w-12 h-12 bg-primary/5 flex items-center justify-center rounded-lg group-hover:bg-primary transition-colors">
-                    <service.icon className="text-primary group-hover:text-white transition-colors" size={24} />
-                  </div>
-                  <h4 className="text-2xl font-bold text-primary tracking-tight">{service.title}</h4>
-                  <p className="text-sm text-gray-500 leading-relaxed">{service.desc}</p>
+                body:  "Knowledge transfer and local capability-building so digital transformation outlasts any single engagement.",
+              },
+            ].map((pillar, i) => (
+              <FadeIn key={pillar.num} delay={i * 0.08}>
+                <div
+                  className="flex flex-col gap-3.5 p-10"
+                  style={{
+                    borderRight: i % 2 === 0 ? "1px solid #efeee7" : "none",
+                    borderBottom: i < 2 ? "1px solid #efeee7" : "none",
+                  }}
+                >
+                  <p
+                    className="text-[13px]"
+                    style={{ fontFamily: "'JetBrains Mono',monospace", color: "#a3651f" }}
+                  >
+                    {pillar.num}
+                  </p>
+                  <h3
+                    className="font-[800] text-[24px] leading-[1.25] tracking-[-0.016em]"
+                    style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#0e0e1a" }}
+                  >
+                    {pillar.title}
+                  </h3>
+                  <p className="text-[15px] leading-[1.6]" style={{ color: "#3b3e5e" }}>
+                    {pillar.body}
+                  </p>
                 </div>
               </FadeIn>
             ))}
@@ -65,79 +100,120 @@ export default function WorkPage() {
         </div>
       </section>
 
-      {/* Risk Sharing Section */}
-      <section className="py-24 px-6 bg-white border-y border-gray-100">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-          <FadeIn className="space-y-8" direction="right">
-            <h2 className="text-4xl font-bold text-primary tracking-tighter leading-tight">We share the risk.</h2>
-            <p className="text-gray-600 leading-relaxed">
-              We invest in public projects alongside governments — taking on delivery risk and sharing in long-term outcomes — rather than billing hourly and walking away.
-            </p>
-            <p className="text-gray-600 leading-relaxed">
-              This changes the engagement. We're paid when the system works, scales, and serves citizens. Our incentives line up with the agency's, and the work is built to keep working long after we move on.
-            </p>
-          </FadeIn>
-          <FadeIn className="p-12 bg-primary text-white space-y-4" direction="left">
-             <p className="text-sm font-bold uppercase tracking-widest text-accent">Our Model</p>
-             <p className="text-3xl font-bold leading-tight italic">"Alignment through co-investment. Performance-based delivery."</p>
-          </FadeIn>
+      {/* CO-INVESTMENT */}
+      <section
+        className="py-20 px-8"
+        style={{ background: "#fff", borderBottom: "1px solid #efeee7" }}
+      >
+        <div className="max-w-[1280px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-16 items-start">
+            <FadeIn>
+              <div
+                className="inline-flex items-center gap-3 text-[11px] font-[800] tracking-[0.22em] uppercase"
+                style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#23258c" }}
+              >
+                <span style={{ width: 24, height: 2, background: "#23258c", display: "inline-block" }} />
+                Co-investment
+              </div>
+            </FadeIn>
+            <FadeIn delay={0.1} className="space-y-5">
+              <p
+                className="text-[19px] leading-[1.7] max-w-[60ch]"
+                style={{ fontFamily: "'Source Serif 4',Georgia,serif", color: "#0e0e1a" }}
+              >
+                We co-invest in public projects alongside governments — taking on delivery risk and sharing in long-term outcomes — rather than billing hourly and walking away.
+              </p>
+              <p
+                className="text-[19px] leading-[1.7] max-w-[60ch]"
+                style={{ fontFamily: "'Source Serif 4',Georgia,serif", color: "#0e0e1a" }}
+              >
+                This changes the engagement. We're paid when the system works, scales, and serves citizens. Our incentives align with the agency's — and the work is built to keep working long after the engagement ends.
+              </p>
+            </FadeIn>
+          </div>
         </div>
       </section>
 
-      {/* Track Record Section */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <FadeIn className="mb-16">
-            <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-2">Track Record</p>
-            <h2 className="text-4xl font-bold text-primary tracking-tighter">What we've shipped.</h2>
+      {/* TRACK RECORD */}
+      <section className="py-20 px-8" style={{ background: "#f7f6f1", borderBottom: "1px solid #efeee7" }}>
+        <div className="max-w-[1280px] mx-auto">
+          <FadeIn className="mb-10">
+            <div
+              className="inline-flex items-center gap-3 text-[11px] font-[800] tracking-[0.22em] uppercase"
+              style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#23258c" }}
+            >
+              <span style={{ width: 24, height: 2, background: "#23258c", display: "inline-block" }} />
+              Track record
+            </div>
           </FadeIn>
 
-          <div className="space-y-32">
+          <div>
             {[
               {
+                tag:   "Nigeria · 2019 – 2023",
                 title: "Electronic Vehicle Administration System.",
-                location: "Nigeria",
-                years: "2019 - 2021",
-                desc: "Replaced fragmented manual processes with a unified digital system for vehicle registration, licensing, and revenue collection. Processed tens of millions of transactions, improved administrative efficiency by 120%, and established the operating template for our subsequent state-government deployments."
+                body:  "Replaced fragmented manual processes with a unified digital system for vehicle registration, licensing, and revenue collection. Processed tens of millions of transactions, improved administrative efficiency by 120%, and established the operating template for subsequent state-government deployments.",
               },
               {
+                tag:   "Multiple states · 2021 – 2025",
                 title: "State-government revenue and licensing platforms.",
-                location: "Multiple Markets",
-                years: "2021 - 2023",
-                desc: "Deployed statewide revenue collection and licensing infrastructure across 26 state governments. 142% average revenue growth for participating partners and an 89% reduction in fraud across implementations."
+                body:  "Deployed statewide revenue collection and licensing infrastructure across 26 state governments. 142% average revenue growth for participating partners and an 89% reduction in fraud across implementations.",
               },
               {
+                tag:   "Regional · 2024 – 2026",
                 title: "Cross-border digital identity infrastructure.",
-                location: "Regional Expansion",
-                years: "2024 - 2026",
-                desc: "Built foundational biometric identity verification infrastructure used by both public agencies for civil services and private operators for KYC and financial inclusion."
-              }
-            ].map((project, i) => (
-              <FadeIn key={i} className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start border-t border-gray-100 pt-16">
-                <div className="lg:col-span-4 space-y-4">
-                  <div className="bg-gray-100 aspect-video rounded-none flex items-center justify-center overflow-hidden border border-gray-200">
-                    <span className="text-gray-400 font-bold text-xs uppercase tracking-widest">Case Study Image</span>
+                body:  "Built foundational biometric identity verification infrastructure used by both public agencies for civil services and private operators for KYC and financial inclusion.",
+              },
+            ].map((cs, i) => (
+              <FadeIn key={i}>
+                <div
+                  className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-12 py-8"
+                  style={{ borderTop: "1px solid #efeee7" }}
+                >
+                  <div
+                    className="font-[800] text-[11px] tracking-[0.22em] uppercase leading-[1.6]"
+                    style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#a3651f" }}
+                  >
+                    {cs.tag}
                   </div>
-                  <div className="flex justify-between items-center text-[10px] uppercase tracking-widest text-gray-400 font-bold">
-                    <span>{project.location}</span>
-                    <span>{project.years}</span>
+                  <div className="space-y-3">
+                    <h3
+                      className="font-[800] text-[22px] tracking-[-0.014em]"
+                      style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#0e0e1a" }}
+                    >
+                      {cs.title}
+                    </h3>
+                    <p className="text-[15px] leading-[1.6] max-w-[60ch]" style={{ color: "#3b3e5e" }}>
+                      {cs.body}
+                    </p>
                   </div>
-                </div>
-                <div className="lg:col-span-8 space-y-6">
-                  <h3 className="text-3xl font-bold text-primary tracking-tight">{project.title}</h3>
-                  <p className="text-lg text-gray-500 leading-relaxed">
-                    {project.desc}
-                  </p>
-                  <Button variant="link" className="text-primary p-0 h-auto font-bold group">
-                    Learn more about this project <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
-                  </Button>
                 </div>
               </FadeIn>
             ))}
+            <div style={{ borderTop: "1px solid #efeee7" }} />
           </div>
         </div>
       </section>
+
+      {/* CTA */}
+      <section className="py-24 px-8" style={{ background: "#0e0e1a", color: "#fff" }}>
+        <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row md:items-center justify-between gap-12">
+          <h2
+            className="font-[800] leading-[1.08] tracking-[-0.026em]"
+            style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: "clamp(32px,4vw,48px)", maxWidth: "22ch" }}
+          >
+            Working on a national or sub-national DPI initiative? Let's talk.
+          </h2>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 text-white px-8 py-4 text-[13px] font-[800] rounded-[6px] transition-colors shrink-0"
+            style={{ fontFamily: "'Gilroy','Inter',sans-serif", background: "#a3651f" }}
+          >
+            Get in touch <ArrowRight size={15} />
+          </Link>
+        </div>
+      </section>
+
     </div>
   );
 }
-

@@ -1,86 +1,109 @@
 import Link from "next/link";
 
-function WrkrLogoFooter() {
+function Mark({ size = 26, color = "#ffffff" }: { size?: number; color?: string }) {
   return (
-    <div className="flex items-center gap-2.5">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M3 4 L3 14 Q3 20 11 20 Q19 20 19 14 L19 4"
-          stroke="#ffffff"
-          strokeWidth="2.5"
-          fill="none"
-          strokeLinecap="round"
-        />
-      </svg>
-      <div className="flex flex-col leading-none">
-        <span className="text-base font-black tracking-tight text-white">WRKR</span>
-        <span className="text-[8px] font-semibold tracking-[0.18em] uppercase text-white/40">
-          Holding Co.
-        </span>
-      </div>
-    </div>
+    <svg width={size} height={size} viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <path
+        d="M14 14 L14 36 C14 46 22 52 32 52 C42 52 50 46 50 36 L50 14"
+        stroke={color}
+        strokeWidth="6"
+        strokeLinecap="square"
+        fill="none"
+      />
+      <circle cx="50" cy="14" r="5" fill={color} />
+    </svg>
   );
 }
 
 export function Footer() {
   return (
-    <footer className="bg-[#1B2068] text-white">
-      <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
-        {/* Brand */}
-        <div className="space-y-4">
-          <Link href="/">
-            <WrkrLogoFooter />
-          </Link>
-          <p className="text-gray-400 text-sm leading-relaxed max-w-[220px]">
-            We build digital infrastructure for the institutions that hold
-            society together. Rooted in Africa. Working globally.
-          </p>
-        </div>
+    <footer style={{ background: "#23258c", color: "#fff" }}>
+      <div className="max-w-[1280px] mx-auto px-8 pt-20 pb-0">
+        <div className="grid grid-cols-1 md:grid-cols-[1.3fr_2fr] gap-16 pb-14">
+          {/* Brand */}
+          <div className="space-y-4">
+            <Link href="/" className="inline-flex items-center gap-3" aria-label="WRKR — home">
+              <Mark size={26} color="#fff" />
+              <div className="flex flex-col leading-none">
+                <span
+                  className="text-[18px] font-[800] tracking-[-0.02em] text-white"
+                  style={{ fontFamily: "'Gilroy','Inter',sans-serif" }}
+                >
+                  WRKR
+                </span>
+                <span
+                  className="text-[8.5px] font-semibold tracking-[0.32em] uppercase"
+                  style={{ color: "rgba(255,255,255,0.7)", marginTop: 1 }}
+                >
+                  HOLDING&nbsp;CO.
+                </span>
+              </div>
+            </Link>
+            <p className="text-[14px] leading-relaxed max-w-[300px]" style={{ color: "rgba(255,255,255,0.8)" }}>
+              We build digital infrastructure for the institutions that hold society together. Rooted in Africa. Working globally.
+            </p>
+          </div>
 
-        {/* Company */}
-        <div>
-          <h4 className="font-bold mb-5 uppercase text-[9px] tracking-[0.2em] text-white/40">Company</h4>
-          <ul className="space-y-3 text-sm text-gray-300">
-            <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
-            <li><Link href="/team" className="hover:text-white transition-colors">Team</Link></li>
-            <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
-          </ul>
-        </div>
+          {/* Links */}
+          <div className="grid grid-cols-3 gap-8">
+            <div>
+              <p
+                className="text-[11px] font-[800] tracking-[0.22em] uppercase mb-4"
+                style={{ color: "rgba(255,255,255,0.65)", fontFamily: "'Gilroy','Inter',sans-serif" }}
+              >
+                Company
+              </p>
+              <ul className="space-y-2 text-[14px]" style={{ color: "rgba(255,255,255,0.85)" }}>
+                <li><Link href="/about"   className="hover:text-white transition-colors">About</Link></li>
+                <li><Link href="/team"    className="hover:text-white transition-colors">Team</Link></li>
+                <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+              </ul>
+            </div>
 
-        {/* Portfolio */}
-        <div>
-          <h4 className="font-bold mb-5 uppercase text-[9px] tracking-[0.2em] text-white/40">Portfolio</h4>
-          <ul className="space-y-3 text-sm text-gray-300">
-            <li><Link href="#" className="hover:text-white transition-colors">Orchestrate</Link></li>
-            <li><Link href="#" className="hover:text-white transition-colors">Piipul</Link></li>
-            <li><Link href="#" className="hover:text-white transition-colors">Slice Finance</Link></li>
-            <li><Link href="#" className="hover:text-white transition-colors">Wavepoint</Link></li>
-          </ul>
-        </div>
+            <div>
+              <p
+                className="text-[11px] font-[800] tracking-[0.22em] uppercase mb-4"
+                style={{ color: "rgba(255,255,255,0.65)", fontFamily: "'Gilroy','Inter',sans-serif" }}
+              >
+                Portfolio
+              </p>
+              <ul className="space-y-2 text-[14px]" style={{ color: "rgba(255,255,255,0.85)" }}>
+                <li><a href="https://orchestrate.global"   target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Orchestrate</a></li>
+                <li><a href="https://piipul.co"            target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Piipul</a></li>
+                <li><a href="https://slicefinance.africa"  target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Slice Finance</a></li>
+                <li><a href="https://wavepoint.africa"     target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Wavepoint</a></li>
+              </ul>
+            </div>
 
-        {/* Work */}
-        <div>
-          <h4 className="font-bold mb-5 uppercase text-[9px] tracking-[0.2em] text-white/40">Work</h4>
-          <ul className="space-y-3 text-sm text-gray-300">
-            <li><Link href="/work" className="hover:text-white transition-colors">Digital Public Infrastructure</Link></li>
-            <li><Link href="#" className="hover:text-white transition-colors">Payment solutions</Link></li>
-            <li><Link href="#" className="hover:text-white transition-colors">Policy advisory</Link></li>
-            <li><Link href="#" className="hover:text-white transition-colors">Implementation</Link></li>
-          </ul>
+            <div>
+              <p
+                className="text-[11px] font-[800] tracking-[0.22em] uppercase mb-4"
+                style={{ color: "rgba(255,255,255,0.65)", fontFamily: "'Gilroy','Inter',sans-serif" }}
+              >
+                Work
+              </p>
+              <ul className="space-y-2 text-[14px]" style={{ color: "rgba(255,255,255,0.85)" }}>
+                <li><Link href="/work" className="hover:text-white transition-colors">Digital Public Infrastructure</Link></li>
+                <li><Link href="/work" className="hover:text-white transition-colors">Payment solutions</Link></li>
+                <li><Link href="/work" className="hover:text-white transition-colors">Policy advisory</Link></li>
+                <li><Link href="/work" className="hover:text-white transition-colors">Implementation</Link></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex flex-wrap gap-x-4 gap-y-2 items-center text-xs text-gray-500">
+      <div style={{ borderTop: "1px solid rgba(255,255,255,0.18)" }}>
+        <div className="max-w-[1280px] mx-auto px-8 py-5 flex flex-wrap gap-x-3 gap-y-1 items-center text-[12px]" style={{ color: "rgba(255,255,255,0.65)" }}>
           <span>© 2026 WRKR Holding Co.</span>
-          <span>·</span>
-          <Link href="/" className="hover:text-gray-300 transition-colors">getwrkr.com</Link>
-          <span>·</span>
-          <a href="mailto:info@getwrkr.com" className="hover:text-gray-300 transition-colors">info@getwrkr.com</a>
-          <span>·</span>
-          <a href="tel:+16466316118" className="hover:text-gray-300 transition-colors">+1 646 631 6118</a>
-          <span>·</span>
+          <span style={{ color: "rgba(255,255,255,0.4)" }}>·</span>
+          <Link href="/" className="hover:text-white transition-colors">getwrkr.com</Link>
+          <span style={{ color: "rgba(255,255,255,0.4)" }}>·</span>
+          <a href="mailto:info@getwrkr.com" className="hover:text-white transition-colors">info@getwrkr.com</a>
+          <span style={{ color: "rgba(255,255,255,0.4)" }}>·</span>
+          <a href="tel:+16466316118" className="hover:text-white transition-colors">+1 646 631 6118</a>
+          <span style={{ color: "rgba(255,255,255,0.4)" }}>·</span>
           <span>Rooted in Africa. Working globally.</span>
         </div>
       </div>

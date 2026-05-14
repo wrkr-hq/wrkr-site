@@ -2,131 +2,216 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/fade-in";
 
-/* ── inline SVG components ─────────────────────────────────────────── */
-
-function BuildingIllustration() {
+/* ── CivicArch — colonnade/parliament background for hero ────────────── */
+function CivicArch() {
   return (
     <svg
-      viewBox="0 0 600 500"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-full h-full"
+      viewBox="0 0 1200 600"
+      preserveAspectRatio="xMidYMid slice"
+      style={{ width: "100%", height: "100%", position: "absolute", inset: 0, opacity: 0.78 }}
       aria-hidden="true"
     >
-      {/* Pediment / roof */}
-      <path d="M60 200 L300 60 L540 200" stroke="#1B2068" strokeWidth="2" opacity="0.15" />
-      {/* Entablature */}
-      <rect x="60" y="200" width="480" height="18" stroke="#1B2068" strokeWidth="1.5" opacity="0.12" />
-      {/* Columns */}
-      {[100, 160, 220, 280, 340, 400, 460].map((x) => (
-        <rect key={x} x={x} y="218" width="14" height="240" stroke="#1B2068" strokeWidth="1.2" opacity="0.10" />
-      ))}
-      {/* Stylobate */}
-      <rect x="60" y="455" width="480" height="10" stroke="#1B2068" strokeWidth="1.5" opacity="0.12" />
-      <rect x="40" y="465" width="520" height="8" stroke="#1B2068" strokeWidth="1.5" opacity="0.10" />
-      {/* Steps */}
-      <rect x="20" y="473" width="560" height="6" stroke="#1B2068" strokeWidth="1" opacity="0.08" />
+      <defs>
+        <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stopColor="#f7f6f1" />
+          <stop offset="100%" stopColor="#efeee7" />
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="600" fill="url(#sky)" />
+      {/* horizon */}
+      <line x1="0" y1="460" x2="1200" y2="460" stroke="#23258c" strokeWidth="1.2" opacity="0.35" />
+      {/* distant building blocks */}
+      <g opacity="0.18" fill="#23258c">
+        <rect x="40"  y="370" width="120" height="90" />
+        <rect x="180" y="350" width="80"  height="110" />
+        <rect x="980" y="360" width="120" height="100" />
+        <rect x="1120" y="380" width="60" height="80" />
+      </g>
+      {/* colonnade — stylized capitol/parliament */}
+      <g>
+        {/* base/steps */}
+        <rect x="280" y="440" width="640" height="22" fill="#23258c" opacity="0.85" />
+        <rect x="260" y="462" width="680" height="14" fill="#23258c" opacity="0.55" />
+        {/* pediment */}
+        <polygon points="280,260 600,180 920,260 920,280 280,280" fill="#23258c" opacity="0.92" />
+        <polygon points="320,260 600,200 880,260" fill="#a3651f" opacity="0.55" />
+        {/* columns */}
+        {Array.from({ length: 9 }).map((_, i) => {
+          const x = 300 + i * 76;
+          return (
+            <rect
+              key={i}
+              x={x}
+              y="280"
+              width="36"
+              height="160"
+              fill="#23258c"
+              opacity={0.78 - i * 0.02}
+            />
+          );
+        })}
+        {/* central seal */}
+        <circle cx="600" cy="230" r="10" fill="#a3651f" />
+      </g>
+      {/* foreground band */}
+      <rect x="0" y="476" width="1200" height="124" fill="#0e0e1a" opacity="0.06" />
+      {/* dot grid as 'people' */}
+      <g fill="#23258c" opacity="0.4">
+        {Array.from({ length: 24 }).map((_, i) => (
+          <circle key={i} cx={120 + i * 40} cy={520 + (i % 3) * 4} r="2.2" />
+        ))}
+      </g>
     </svg>
   );
 }
 
-function AfricaMap() {
-  const countries = [
-    { x: 182, y: 190, label: "Nigeria", primary: true },
-    { x: 152, y: 215, label: "Ghana", primary: false },
-    { x: 338, y: 195, label: "Kenya", primary: false },
-    { x: 316, y: 188, label: "Uganda", primary: false },
-    { x: 322, y: 208, label: "Rwanda", primary: false },
-    { x: 338, y: 240, label: "Tanzania", primary: false },
-    { x: 282, y: 295, label: "Zambia", primary: false },
+/* ── ConceptStack — layered DPI illustration ──────────────────────────── */
+function ConceptStack() {
+  const layers = [
+    { y: 70,  label: "Identity",   sub: "Who you are",        color: "#23258c" },
+    { y: 155, label: "Payments",   sub: "How value moves",    color: "#3a3cb0" },
+    { y: 240, label: "Compliance", sub: "What gets recorded", color: "#a3651f" },
+    { y: 325, label: "Banking",    sub: "Where capital sits", color: "#0e0e1a" },
   ];
+  return (
+    <svg viewBox="0 0 560 460" className="w-full h-auto" aria-hidden="true">
+      <g
+        fontFamily='"Gilroy","Inter",sans-serif'
+        fontWeight="800"
+        fontSize="11"
+        letterSpacing="2.4"
+        fill="#6b6e88"
+      >
+        <text x="30"  y="30">CITIZENS</text>
+        <text x="230" y="30">BUSINESSES</text>
+        <text x="420" y="30">GOV'T</text>
+      </g>
+      {[60, 280, 460].map((x, i) => (
+        <line key={i} x1={x} y1="40" x2={x} y2="65" stroke="#c4c6d4" strokeWidth="1" />
+      ))}
+      {layers.map((l, i) => (
+        <g key={i}>
+          <rect x="30" y={l.y} width="500" height="60" fill={l.color} opacity={i === 2 ? 1 : 0.92} />
+          <text
+            x="50"
+            y={l.y + 26}
+            fontFamily='"Gilroy","Inter",sans-serif'
+            fontWeight="800"
+            fontSize="16"
+            fill="#fff"
+          >
+            {l.label}
+          </text>
+          <text x="50" y={l.y + 46} fontFamily='"Inter",sans-serif' fontSize="11" fill="rgba(255,255,255,0.78)">
+            {l.sub}
+          </text>
+          {[260, 330, 400, 470].map((x, k) => (
+            <circle key={k} cx={x} cy={l.y + 30} r="2.5" fill="rgba(255,255,255,0.55)" />
+          ))}
+        </g>
+      ))}
+      <line x1="30" y1="410" x2="530" y2="410" stroke="#0e0e1a" strokeWidth="1.5" />
+      <text x="30" y="435" fontFamily='"JetBrains Mono",monospace' fontSize="10" fill="#6b6e88">
+        DIGITAL PUBLIC INFRASTRUCTURE · WRKR HOLDING CO.
+      </text>
+    </svg>
+  );
+}
+
+/* ── AfricaMap — region-based silhouette with WRKR country markers ────── */
+function AfricaMap() {
+  const markers = [
+    { x: 290, y: 478, n: "Nigeria",  big: true,  off: "l" },
+    { x: 240, y: 510, n: "Ghana",    off: "l" },
+    { x: 615, y: 482, n: "Uganda",   off: "r" },
+    { x: 632, y: 502, n: "Rwanda",   off: "r" },
+    { x: 660, y: 470, n: "Kenya",    off: "r" },
+    { x: 640, y: 555, n: "Tanzania", off: "r" },
+    { x: 460, y: 685, n: "Zambia",   off: "l" },
+  ] as { x: number; y: number; n: string; big?: boolean; off: string }[];
 
   return (
-    <svg viewBox="0 0 500 520" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-lg ml-auto">
-      {/* Africa outline — simplified */}
-      <path
-        d="M148,18 L190,10 L230,14 L268,8 L308,16 L340,30 L368,52 L384,78 L390,108
-           L386,130 L396,152 L400,178 L392,204 L408,228 L414,258 L404,290
-           L386,318 L366,344 L342,370 L316,396 L290,416 L264,428
-           L238,432 L212,426 L188,410 L166,388 L144,360 L122,328
-           L102,296 L88,264 L78,232 L72,200 L70,170 L78,144
-           L68,124 L64,104 L72,82 L90,62 L112,44 L148,18 Z"
-        stroke="#1B2068"
-        strokeWidth="1.5"
-        fill="none"
-        opacity="0.7"
-      />
-      {/* Region highlights */}
-      <path
-        d="M148,120 L220,110 L240,140 L230,170 L200,185 L165,180 L140,160 L132,140 Z"
-        stroke="#1B2068"
-        strokeWidth="0.8"
-        fill="#EDECEA"
-        opacity="0.6"
-      />
-      <path
-        d="M280,140 L360,132 L380,165 L370,200 L340,215 L300,210 L278,185 L272,160 Z"
-        stroke="#1B2068"
-        strokeWidth="0.8"
-        fill="#EDECEA"
-        opacity="0.6"
-      />
-      {/* Internal borders (simplified) */}
-      <path d="M140,150 L240,145" stroke="#1B2068" strokeWidth="0.6" opacity="0.3" />
-      <path d="M278,170 L380,165" stroke="#1B2068" strokeWidth="0.6" opacity="0.3" />
-      <path d="M200,140 L200,185" stroke="#1B2068" strokeWidth="0.6" opacity="0.3" />
-      <path d="M310,150 L316,210" stroke="#1B2068" strokeWidth="0.6" opacity="0.3" />
+    <svg viewBox="0 0 900 1020" className="w-full h-auto max-w-lg ml-auto" aria-hidden="true">
+      <defs>
+        <pattern id="dotgridGeo" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="1" r="0.7" fill="#23258c" opacity="0.18" />
+        </pattern>
+      </defs>
+      <rect x="0" y="0" width="900" height="1020" fill="url(#dotgridGeo)" />
 
-      {/* Latitude lines */}
-      <line x1="60" y1="80" x2="440" y2="80" stroke="#1B2068" strokeWidth="0.4" strokeDasharray="4 4" opacity="0.2" />
-      <line x1="60" y1="180" x2="440" y2="180" stroke="#1B2068" strokeWidth="0.4" strokeDasharray="4 4" opacity="0.2" />
-      <line x1="60" y1="320" x2="440" y2="320" stroke="#1B2068" strokeWidth="0.4" strokeDasharray="4 4" opacity="0.2" />
-      <text x="62" y="76" fontSize="9" fill="#1B2068" opacity="0.35" fontFamily="monospace">+23.5°</text>
-      <text x="62" y="176" fontSize="9" fill="#1B2068" opacity="0.35" fontFamily="monospace">8°</text>
-      <text x="62" y="316" fontSize="9" fill="#1B2068" opacity="0.35" fontFamily="monospace">-23.5°</text>
+      {/* lat reference lines */}
+      <g stroke="#23258c" strokeWidth="0.6" opacity="0.22" strokeDasharray="3 6">
+        <line x1="0" y1="240" x2="900" y2="240" />
+        <line x1="0" y1="540" x2="900" y2="540" />
+        <line x1="0" y1="840" x2="900" y2="840" />
+      </g>
+      <g fontFamily='"JetBrains Mono",monospace' fontSize="12" fill="#6b6e88" opacity="0.6">
+        <text x="14" y="236">+23.5°</text>
+        <text x="14" y="536">  0°</text>
+        <text x="14" y="836">−23.5°</text>
+      </g>
 
-      {/* Compass */}
-      <circle cx="448" cy="40" r="14" stroke="#1B2068" strokeWidth="1" opacity="0.5" />
-      <polygon points="448,26 452,40 448,34 444,40" fill="#1B2068" opacity="0.5" />
-      <polygon points="448,54 444,40 448,46 452,40" fill="#1B2068" opacity="0.2" />
-      <text x="445" y="24" fontSize="8" fill="#1B2068" opacity="0.6" fontFamily="monospace">N</text>
+      {/* Africa — five regional pieces */}
+      <g stroke="#23258c" strokeWidth="2" strokeLinejoin="round">
+        <path fill="#efeee7"
+          d="M 455 40 L 520 70 L 570 110 L 620 170 L 650 220 L 670 280 L 690 340
+             L 520 410 L 260 450 L 240 340 L 430 90 Z"/>
+        <path fill="#efeee7"
+          d="M 240 340 L 260 450 L 300 550 L 320 640 L 280 720 L 240 700
+             L 210 660 L 190 610 L 170 560 L 150 510 L 140 460 L 160 410 L 190 380 Z"/>
+        <path fill="#efeee7"
+          d="M 300 550 L 600 530 L 610 610 L 600 720 L 330 730 L 320 640 Z"/>
+        <path fill="#f0e2d0"
+          d="M 600 530 L 700 500 L 690 555 L 660 605 L 630 660 L 600 720 L 610 610 Z"/>
+        <path fill="#efeee7"
+          d="M 330 730 L 600 720 L 570 770 L 540 820 L 500 860 L 460 895
+             L 420 925 L 370 950 L 330 960 L 300 945 L 285 905 L 300 860 L 320 820 L 330 790 Z"/>
+        <path fill="#efeee7"
+          d="M 720 770 L 760 800 L 770 870 L 740 920 L 705 905 L 695 855 L 705 810 Z"/>
+      </g>
 
-      {/* Country dots + labels */}
-      {countries.map((c) => (
-        <g key={c.label}>
-          {c.primary ? (
-            <>
-              <circle cx={c.x} cy={c.y} r="7" stroke="#B08835" strokeWidth="1.5" fill="none" />
-              <circle cx={c.x} cy={c.y} r="3.5" fill="#B08835" />
-            </>
-          ) : (
-            <circle cx={c.x} cy={c.y} r="4" fill="#B08835" opacity="0.75" />
-          )}
+      {/* Country markers */}
+      {markers.map((m, i) => (
+        <g key={i}>
+          <circle cx={m.x} cy={m.y} r={m.big ? 22 : 14} fill="#a3651f" opacity="0.16" />
+          <circle cx={m.x} cy={m.y} r={m.big ? 11 : 7}  fill="#a3651f" />
+          {m.big && <circle cx={m.x} cy={m.y} r="4" fill="#fff" />}
           <text
-            x={c.x + (c.label === "Ghana" ? -8 : c.label === "Uganda" || c.label === "Rwanda" ? 8 : 10)}
-            y={c.y + (c.label === "Ghana" ? 14 : c.label === "Tanzania" ? 12 : -6)}
-            fontSize="9.5"
-            fontWeight="600"
-            fill="#1B2068"
-            fontFamily="sans-serif"
-            textAnchor={c.label === "Ghana" ? "middle" : "start"}
+            x={m.off === "r" ? m.x + 22 : m.x - 22}
+            y={m.y + 7}
+            textAnchor={m.off === "r" ? "start" : "end"}
+            fontFamily='"Gilroy","Inter",sans-serif'
+            fontWeight={m.big ? 800 : 700}
+            fontSize={m.big ? 26 : 20}
+            fill="#0e0e1a"
           >
-            {c.label}
+            {m.n}
           </text>
         </g>
       ))}
 
+      {/* Compass */}
+      <g transform="translate(810, 100)" fontFamily='"JetBrains Mono",monospace' fontSize="13" fill="#6b6e88">
+        <circle cx="0" cy="0" r="28" fill="rgba(247,246,241,0.92)" stroke="#23258c" strokeWidth="1.2" />
+        <polygon points="0,-22 6,0 0,22 -6,0" fill="#23258c" />
+        <text x="-5" y="-34" fontWeight="700" fill="#0e0e1a">N</text>
+      </g>
+
       {/* Legend */}
-      <g transform="translate(60,470)">
-        <circle cx="6" cy="6" r="5" stroke="#B08835" strokeWidth="1.5" fill="none" />
-        <circle cx="6" cy="6" r="2.5" fill="#B08835" />
-        <text x="16" y="10" fontSize="9" fill="#1B2068" opacity="0.6" fontFamily="sans-serif">Primary base</text>
-
-        <circle cx="110" cy="6" r="4" fill="#B08835" opacity="0.75" />
-        <text x="120" y="10" fontSize="9" fill="#1B2068" opacity="0.6" fontFamily="sans-serif">Active engagement</text>
-
-        <rect x="214" y="2" width="10" height="8" stroke="#1B2068" strokeWidth="1" fill="none" opacity="0.5" />
-        <text x="230" y="10" fontSize="9" fill="#1B2068" opacity="0.6" fontFamily="sans-serif">Region of focus</text>
+      <g transform="translate(40, 970)" fontFamily='"JetBrains Mono",monospace' fontSize="14" fill="#6b6e88">
+        <g>
+          <circle cx="10" cy="0" r="11" fill="#a3651f" />
+          <circle cx="10" cy="0" r="4"  fill="#fff" />
+          <text x="32" y="6">Primary base</text>
+        </g>
+        <g transform="translate(240, 0)">
+          <circle cx="10" cy="0" r="7" fill="#a3651f" />
+          <text x="28" y="6">Active engagement</text>
+        </g>
+        <g transform="translate(520, 0)">
+          <rect x="0" y="-8" width="20" height="16" fill="#f0e2d0" stroke="#23258c" strokeWidth="1.2" />
+          <text x="28" y="6">Region of focus</text>
+        </g>
       </g>
     </svg>
   );
@@ -139,275 +224,357 @@ export default function Home() {
     <div className="flex flex-col">
 
       {/* HERO */}
-      <section className="relative pt-28 pb-20 px-6 bg-[#EDECEA] overflow-hidden min-h-[90vh] flex items-center">
-        <div className="absolute right-0 top-0 w-[55%] h-full opacity-100 pointer-events-none">
-          <BuildingIllustration />
+      <section
+        className="relative overflow-hidden"
+        style={{ background: "#f7f6f1", borderBottom: "1px solid #efeee7" }}
+      >
+        {/* Background illustration */}
+        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+          <CivicArch />
         </div>
+        {/* Fade overlay so text is readable */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(247,246,241,0.55) 0%, rgba(247,246,241,0.78) 35%, rgba(247,246,241,0.96) 70%, #f7f6f1 100%)",
+            zIndex: 1,
+          }}
+        />
 
-        <div className="relative max-w-7xl mx-auto w-full">
-          {/* Badge */}
-          <FadeIn>
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-0.5 h-5 bg-primary" />
-              <span className="text-xs font-bold tracking-[0.2em] uppercase text-primary">
-                WRKR Holding Co. · Est. 2019
-              </span>
-            </div>
-          </FadeIn>
-
-          {/* Headline */}
-          <FadeIn delay={0.1}>
-            <h1 className="text-[clamp(48px,7vw,88px)] font-black leading-[0.95] tracking-tight text-primary max-w-[720px] mb-10">
-              We build{" "}
-              <span className="text-[#3B54D4]">digital<br />infrastructure</span>{" "}
-              for the<br />
-              institutions that hold<br />
-              society together.
-            </h1>
-          </FadeIn>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
-            <FadeIn delay={0.2} className="space-y-8">
-              <p className="text-gray-600 text-base leading-relaxed max-w-sm">
-                Public agencies. Regulated industries. The work that has to be
-                right. We invest in operators building the systems governments
-                and businesses depend on.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/portfolio"
-                  className="inline-flex items-center gap-2 bg-primary text-white px-7 py-3.5 text-sm font-bold hover:bg-primary/90 transition-colors"
+        <div
+          className="relative max-w-[1280px] mx-auto px-8"
+          style={{ paddingTop: 112, paddingBottom: 120, zIndex: 2 }}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-16 items-end">
+            <div>
+              <FadeIn>
+                <div
+                  className="inline-block mb-8 pl-4 text-[11px] font-[800] tracking-[0.28em] uppercase"
+                  style={{
+                    fontFamily: "'Gilroy','Inter',sans-serif",
+                    color: "#23258c",
+                    borderLeft: "2px solid #23258c",
+                  }}
                 >
-                  See the portfolio <ArrowRight size={15} />
-                </Link>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 border border-primary text-primary px-7 py-3.5 text-sm font-bold hover:bg-primary/5 transition-colors"
-                >
-                  Work with us
-                </Link>
-              </div>
-            </FadeIn>
-
-            {/* Stats card */}
-            <FadeIn delay={0.35} className="lg:justify-self-end">
-              <div>
-                <p className="font-bold text-primary text-sm mb-1">Rooted in Africa.</p>
-                <p className="text-gray-400 text-sm font-mono mb-4">Working globally.</p>
-                <div className="space-y-0.5 text-gray-400 text-sm font-mono">
-                  <p>11 countries</p>
-                  <p>26 state govts</p>
-                  <p>100+ companies served</p>
+                  WRKR Holding Co. · est. 2019
                 </div>
+              </FadeIn>
+
+              <FadeIn delay={0.08}>
+                <h1
+                  className="font-[800] leading-[1.04] tracking-[-0.028em] mb-8"
+                  style={{
+                    fontFamily: "'Gilroy','Inter',sans-serif",
+                    fontSize: "clamp(52px,6.5vw,76px)",
+                    color: "#0e0e1a",
+                    maxWidth: "18ch",
+                  }}
+                >
+                  We build{" "}
+                  <em style={{ fontStyle: "normal", color: "#23258c" }}>
+                    digital&nbsp;infrastructure
+                  </em>{" "}
+                  for the institutions that hold society together.
+                </h1>
+              </FadeIn>
+
+              <FadeIn delay={0.18}>
+                <p
+                  className="mb-10 leading-[1.55]"
+                  style={{
+                    fontFamily: "'Inter',sans-serif",
+                    fontSize: 20,
+                    color: "#3b3e5e",
+                    maxWidth: 620,
+                  }}
+                >
+                  Public agencies. Regulated industries. The work that has to be right. We invest in operators building the systems governments and businesses depend on.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <Link
+                    href="/portfolio"
+                    className="inline-flex items-center gap-2.5 text-white px-6 py-3 text-[13px] font-[800] rounded-[6px] transition-colors"
+                    style={{
+                      fontFamily: "'Gilroy','Inter',sans-serif",
+                      background: "#23258c",
+                    }}
+                  >
+                    See the portfolio <ArrowRight size={14} />
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-2 px-6 py-3 text-[13px] font-[800] rounded-[6px] border transition-colors"
+                    style={{
+                      fontFamily: "'Gilroy','Inter',sans-serif",
+                      color: "#0e0e1a",
+                      borderColor: "#c4c6d4",
+                    }}
+                  >
+                    Work with us
+                  </Link>
+                </div>
+              </FadeIn>
+            </div>
+
+            {/* Hero sidebar */}
+            <FadeIn delay={0.3}>
+              <div
+                className="pl-5"
+                style={{
+                  borderLeft: "1px solid #c4c6d4",
+                  fontFamily: "'JetBrains Mono',monospace",
+                  fontSize: 12,
+                  color: "#6b6e88",
+                  lineHeight: 1.7,
+                  paddingBottom: 8,
+                }}
+              >
+                <strong
+                  className="block mb-1.5"
+                  style={{
+                    color: "#0e0e1a",
+                    fontWeight: 600,
+                    fontFamily: "'Gilroy','Inter',sans-serif",
+                    fontSize: 14,
+                    letterSpacing: 0,
+                  }}
+                >
+                  Rooted in Africa.
+                </strong>
+                Working globally.
+                <br /><br />
+                11 countries
+                <br />26 state govts
+                <br />100+ companies served
               </div>
             </FadeIn>
           </div>
         </div>
       </section>
 
-      {/* TWO-COLUMN PROPOSITION */}
-      <section className="py-20 px-6 bg-[#EDECEA]">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
-          <FadeIn>
-            <div className="bg-white p-12 space-y-4 h-full">
-              <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#3B54D4]">WE INVEST</p>
-              <h3 className="text-2xl font-bold text-primary leading-snug">
-                Operators in payments, identity, banking, and compliance.
-              </h3>
-              <p className="text-gray-500 leading-relaxed text-sm">
-                Verticals where reliability isn't optional. We back founders
-                building the connective tissue of regulated digital services —
-                and stay in for the long arc.
-              </p>
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.15}>
-            <div className="bg-white p-12 space-y-4 h-full">
-              <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#B08835]">WE BUILD</p>
-              <h3 className="text-2xl font-bold text-primary leading-snug">
-                Digital public infrastructure for African governments.
-              </h3>
-              <p className="text-gray-500 leading-relaxed text-sm">
-                Advisory, implementation, and co-investment in public projects
-                — identity systems, licensing, payments, and the policy
-                frameworks that make them last.
-              </p>
-            </div>
-          </FadeIn>
+      {/* TWO-TRACK PROPOSITION */}
+      <section
+        className="py-24 px-8"
+        style={{ background: "#f7f6f1", borderBottom: "1px solid #efeee7" }}
+      >
+        <div className="max-w-[1280px] mx-auto">
+          <div
+            className="grid grid-cols-1 md:grid-cols-2"
+            style={{ border: "1px solid #efeee7", background: "#fff" }}
+          >
+            <FadeIn>
+              <div className="p-12 space-y-4">
+                <p
+                  className="text-[11px] font-[800] tracking-[0.22em] uppercase mb-5"
+                  style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#23258c" }}
+                >
+                  We invest
+                </p>
+                <h3
+                  className="font-[800] leading-[1.2]"
+                  style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: 28, letterSpacing: "-0.022em", color: "#0e0e1a" }}
+                >
+                  Operators in payments, identity, banking, and compliance.
+                </h3>
+                <p className="text-[16px] leading-relaxed" style={{ color: "#3b3e5e" }}>
+                  Verticals where reliability isn't optional. We back founders building the connective tissue of regulated digital services — and stay in for the long arc.
+                </p>
+              </div>
+            </FadeIn>
+            <FadeIn delay={0.12}>
+              <div
+                className="p-12 space-y-4"
+                style={{ borderLeft: "1px solid #efeee7", background: "#f7f6f1" }}
+              >
+                <p
+                  className="text-[11px] font-[800] tracking-[0.22em] uppercase mb-5"
+                  style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#a3651f" }}
+                >
+                  We build
+                </p>
+                <h3
+                  className="font-[800] leading-[1.2]"
+                  style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: 28, letterSpacing: "-0.022em", color: "#0e0e1a" }}
+                >
+                  Digital public infrastructure for African governments.
+                </h3>
+                <p className="text-[16px] leading-relaxed" style={{ color: "#3b3e5e" }}>
+                  Advisory, implementation, and co-investment in public projects — identity systems, licensing, payments, and the policy frameworks that make them last.
+                </p>
+              </div>
+            </FadeIn>
+          </div>
         </div>
       </section>
 
       {/* THE STACK WE BELIEVE IN */}
-      <section className="py-24 px-6 bg-[#F4F3EE]">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          <FadeIn className="space-y-6 lg:pt-8">
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-0.5 bg-[#B08835]" />
-              <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#B08835]">
-                THE STACK WE BELIEVE IN
-              </p>
+      <section
+        className="py-24 px-8"
+        style={{ background: "#fff", borderBottom: "1px solid #efeee7" }}
+      >
+        <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          <FadeIn className="space-y-5">
+            <div
+              className="inline-flex items-center gap-3 text-[11px] font-[800] tracking-[0.22em] uppercase mb-1"
+              style={{
+                fontFamily: "'Gilroy','Inter',sans-serif",
+                color: "#a3651f",
+              }}
+            >
+              <span style={{ width: 24, height: 2, background: "#a3651f", display: "inline-block" }} />
+              The stack we believe in
             </div>
-            <h2 className="text-4xl font-black text-primary leading-tight tracking-tight">
+            <h2
+              className="font-[800] leading-[1.05] tracking-[-0.025em]"
+              style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: 44, color: "#0e0e1a" }}
+            >
               Four layers.<br />Built to interoperate.
             </h2>
-            <p className="text-gray-500 leading-relaxed text-sm max-w-sm">
-              Identity, payments, compliance, and banking are the connective
-              tissue between citizens, businesses, and governments. We invest
-              and build at each layer — because none of them work in isolation,
-              and the value compounds when they do.
+            <p className="text-[16px] leading-relaxed max-w-sm" style={{ color: "#3b3e5e" }}>
+              Identity, payments, compliance, and banking are the connective tissue between citizens, businesses, and governments. We invest and build at each layer — because none of them work in isolation, and the value compounds when they do.
             </p>
           </FadeIn>
 
           <FadeIn delay={0.2}>
-            <div className="space-y-2">
-              {/* Column headers */}
-              <div className="grid grid-cols-[180px_1fr_1fr_1fr] gap-2 pb-1">
-                <div />
-                {["CITIZENS", "BUSINESSES", "GOV'T"].map((h) => (
-                  <p key={h} className="text-[9px] uppercase tracking-[0.15em] font-bold text-gray-400 text-center">
-                    {h}
-                  </p>
-                ))}
-              </div>
-              {/* Divider lines under headers */}
-              <div className="grid grid-cols-[180px_1fr_1fr_1fr] gap-2 pb-2">
-                <div />
-                {[0, 1, 2].map((i) => (
-                  <div key={i} className="border-t border-gray-300" />
-                ))}
-              </div>
-
-              {[
-                { name: "Identity", sub: "Who you are", bg: "bg-[#2D3B9E]" },
-                { name: "Payments", sub: "How value moves", bg: "bg-[#3B4CC0]" },
-                { name: "Compliance", sub: "What gets recorded", bg: "bg-[#B08835]" },
-                { name: "Banking", sub: "Where capital sits", bg: "bg-[#1A1A2E]" },
-              ].map((layer) => (
-                <div
-                  key={layer.name}
-                  className={`${layer.bg} grid grid-cols-[180px_1fr_1fr_1fr] gap-2 px-4 py-4 items-center`}
-                >
-                  <div>
-                    <p className="text-white font-bold text-sm">{layer.name}</p>
-                    <p className="text-white/55 text-xs">{layer.sub}</p>
-                  </div>
-                  {[0, 1, 2].map((i) => (
-                    <div key={i} className="flex justify-center">
-                      <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
-                    </div>
-                  ))}
-                </div>
-              ))}
-
-              <div className="pt-3 border-t border-gray-300">
-                <p className="text-[9px] uppercase tracking-[0.15em] font-bold text-gray-400">
-                  Digital Public Infrastructure · WRKR Holding Co.
-                </p>
-              </div>
-            </div>
+            <ConceptStack />
           </FadeIn>
         </div>
       </section>
 
-      {/* PORTFOLIO */}
-      <section className="py-24 px-6 bg-[#EDECEA]">
-        <div className="max-w-7xl mx-auto">
+      {/* PORTFOLIO TEASER */}
+      <section
+        className="py-24 px-8"
+        style={{ background: "#f7f6f1", borderBottom: "1px solid #efeee7" }}
+      >
+        <div className="max-w-[1280px] mx-auto">
           <FadeIn className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
             <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-6 h-0.5 bg-primary" />
-                <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-primary">PORTFOLIO</p>
+              <div
+                className="inline-flex items-center gap-3 text-[11px] font-[800] tracking-[0.22em] uppercase"
+                style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#23258c" }}
+              >
+                <span style={{ width: 24, height: 2, background: "#23258c", display: "inline-block" }} />
+                Portfolio
               </div>
-              <h2 className="text-4xl font-black text-primary tracking-tight">
+              <h2
+                className="font-[800] tracking-[-0.025em]"
+                style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: 44, color: "#0e0e1a" }}
+              >
                 Four operators. One thesis.
               </h2>
             </div>
             <Link
               href="/portfolio"
-              className="inline-flex items-center gap-2 border border-primary text-primary px-5 py-2.5 text-sm font-bold hover:bg-primary hover:text-white transition-colors shrink-0"
+              className="inline-flex items-center gap-2 text-[13px] font-[800] px-5 py-2.5 border rounded-[6px] transition-colors shrink-0"
+              style={{
+                fontFamily: "'Gilroy','Inter',sans-serif",
+                color: "#23258c",
+                borderColor: "#23258c",
+                background: "transparent",
+              }}
             >
-              Explore the portfolio <ArrowRight size={14} />
+              Explore the portfolio <ArrowRight size={13} />
             </Link>
           </FadeIn>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
-                initial: "O",
-                iconBg: "bg-[#2D3B9E]",
-                iconText: "text-white",
-                category: "DIGITAL PAYMENTS",
-                name: "Orchestrate",
-                desc: "Integrated payment infrastructure for governments and regulated commerce.",
-                link: "orchestrate.global",
-                imgTag: "Payments · photo",
-                imgDesc: "Wide shot of port / customs hall — commerce flows",
+                mark:     "O",
+                markStyle:{ background: "#23258c", color: "#fff" },
+                sector:   "Digital Payments",
+                name:     "Orchestrate",
+                desc:     "Integrated payment infrastructure for governments and regulated commerce.",
+                link:     "orchestrate.global",
               },
               {
-                initial: "P",
-                iconBg: "bg-[#B08835]",
-                iconText: "text-white",
-                category: "DIGITAL IDENTITY",
-                name: "Piipul",
-                desc: "Identity verification infrastructure — the foundation layer for everything downstream.",
-                link: "piipul.co",
-                imgTag: "Identity · photo",
-                imgDesc: "Hands holding national ID card — close, dignified",
+                mark:     "P",
+                markStyle:{ background: "#a3651f", color: "#fff" },
+                sector:   "Digital Identity",
+                name:     "Piipul",
+                desc:     "Identity verification infrastructure — the foundation layer for everything downstream.",
+                link:     "piipul.co",
               },
               {
-                initial: "S",
-                iconBg: "bg-[#1A1A2E]",
-                iconText: "text-white",
-                category: "COMPLIANCE & REGULATION",
-                name: "Slice Finance",
-                desc: "Compliance infrastructure for regulated industries.",
-                link: "slicefinance.africa",
-                imgTag: "Compliance · photo",
-                imgDesc: "Trading floor or regulator office — controlled, formal",
+                mark:     "S",
+                markStyle:{ background: "#0e0e1a", color: "#fff" },
+                sector:   "Compliance & Regulation",
+                name:     "Slice Finance",
+                desc:     "Compliance infrastructure for regulated industries.",
+                link:     "slicefinance.africa",
               },
               {
-                initial: "W",
-                iconBg: "bg-white border border-primary",
-                iconText: "text-primary",
-                category: "BANKING-AS-A-SERVICE",
-                name: "Wavepoint",
-                desc: "Banking infrastructure for fintechs, platforms, and embedded finance providers.",
-                link: "wavepoint.africa",
-                imgTag: "Banking · photo",
-                imgDesc: "Modern bank facade — architectural, head-on",
+                mark:     "W",
+                markStyle:{ background: "#fff", color: "#23258c", border: "1.5px solid #23258c" },
+                sector:   "Banking-as-a-Service",
+                name:     "Wavepoint",
+                desc:     "Banking infrastructure for fintechs, platforms, and embedded finance providers.",
+                link:     "wavepoint.africa",
               },
             ].map((op, i) => (
               <FadeIn key={op.name} delay={i * 0.08}>
-                <div className="bg-white flex flex-col h-full">
+                <div
+                  className="flex flex-col h-full transition-all duration-200 hover:-translate-y-0.5"
+                  style={{ background: "#fff", border: "1px solid #efeee7", cursor: "pointer" }}
+                >
                   {/* Photo placeholder */}
-                  <div className="bg-gray-200 h-44 relative p-3 flex items-start justify-between">
-                    <span className="text-[10px] bg-white/90 px-2 py-1 text-gray-600 font-medium">
-                      {op.imgTag}
-                    </span>
-                    <span className="text-[10px] text-gray-500 italic max-w-[110px] text-right leading-snug">
-                      {op.imgDesc}
-                    </span>
+                  <div
+                    className="relative overflow-hidden"
+                    style={{
+                      background: "#efeee7",
+                      aspectRatio: "16/9",
+                      margin: "-1px -1px 0",
+                      borderBottom: "1px solid #efeee7",
+                    }}
+                  >
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        backgroundImage:
+                          "linear-gradient(135deg, rgba(35,37,140,0.10), transparent 60%), repeating-linear-gradient(45deg, transparent 0 14px, rgba(35,37,140,0.04) 14px 15px)",
+                      }}
+                    />
                   </div>
                   {/* Card body */}
-                  <div className="p-6 space-y-3 flex flex-col flex-1">
+                  <div className="p-6 flex flex-col flex-1 gap-3">
                     <div
-                      className={`w-10 h-10 flex items-center justify-center font-bold text-base ${op.iconBg} ${op.iconText}`}
+                      className="w-11 h-11 flex items-center justify-center font-[800] text-[18px] rounded-[6px]"
+                      style={{ fontFamily: "'Gilroy','Inter',sans-serif", ...op.markStyle }}
                     >
-                      {op.initial}
+                      {op.mark}
                     </div>
                     <div>
-                      <p className="text-[9px] uppercase tracking-[0.18em] text-gray-400 font-bold mb-0.5">
-                        {op.category}
+                      <p
+                        className="text-[11px] font-[800] tracking-[0.18em] uppercase mb-0.5"
+                        style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#6b6e88" }}
+                      >
+                        {op.sector}
                       </p>
-                      <h4 className="text-base font-bold text-primary">{op.name}</h4>
+                      <h4
+                        className="font-[800] text-[20px] tracking-[-0.012em]"
+                        style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#0e0e1a" }}
+                      >
+                        {op.name}
+                      </h4>
                     </div>
-                    <p className="text-sm text-gray-500 leading-relaxed flex-1">{op.desc}</p>
-                    <Link
-                      href="#"
-                      className="text-sm text-[#3B54D4] font-medium hover:underline inline-flex items-center gap-1"
+                    <p className="text-[14px] leading-[1.55] flex-1" style={{ color: "#3b3e5e" }}>
+                      {op.desc}
+                    </p>
+                    <a
+                      href={`https://${op.link}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[12px] pt-3 inline-flex items-center gap-1 hover:underline"
+                      style={{
+                        fontFamily: "'JetBrains Mono',monospace",
+                        color: "#23258c",
+                        borderTop: "1px solid #efeee7",
+                      }}
                     >
-                      {op.link} <ArrowRight size={12} />
-                    </Link>
+                      {op.link} →
+                    </a>
                   </div>
                 </div>
               </FadeIn>
@@ -416,25 +583,44 @@ export default function Home() {
         </div>
       </section>
 
-      {/* STATS — PROOF · TRACK RECORD */}
-      <section className="py-24 px-6 bg-primary text-white">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-[10px] uppercase tracking-[0.22em] font-bold text-white/35 mb-16">
+      {/* STATS — PROOF */}
+      <section className="py-20 px-8" style={{ background: "#23258c", color: "#fff" }}>
+        <div className="max-w-[1280px] mx-auto">
+          <p
+            className="text-[11px] font-[800] tracking-[0.28em] uppercase mb-8"
+            style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "rgba(255,255,255,0.7)" }}
+          >
             PROOF · TRACK RECORD
           </p>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-14 gap-x-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3">
             {[
               { val: "$100M+", label: "Processed through our payments infrastructure" },
-              { val: "11", label: "Countries served across Africa, Europe, and North America" },
-              { val: "26", label: "State governments served across Nigeria" },
-              { val: "100+", label: "Companies served across our markets" },
-              { val: "89%", label: "Reduction in fraud across implementations" },
-              { val: "142%", label: "Revenue growth for government partners" },
-            ].map((stat) => (
+              { val: "11",     label: "Countries served across Africa, Europe, and North America" },
+              { val: "26",     label: "State governments served across Nigeria" },
+              { val: "100+",   label: "Companies served across our markets" },
+              { val: "89%",    label: "Reduction in fraud across implementations" },
+              { val: "142%",   label: "Revenue growth for government partners" },
+            ].map((stat, i) => (
               <FadeIn key={stat.val} direction="up">
-                <div>
-                  <p className="text-5xl md:text-6xl font-black tracking-tight mb-2">{stat.val}</p>
-                  <p className="text-sm text-white/50 leading-snug max-w-[200px]">{stat.label}</p>
+                <div
+                  className="py-8 px-7"
+                  style={{
+                    borderLeft: i % 3 === 0 ? "none" : "1px solid rgba(255,255,255,0.18)",
+                    paddingLeft: i % 3 === 0 ? 0 : undefined,
+                  }}
+                >
+                  <p
+                    className="font-[800] tracking-[-0.028em] leading-none mb-3"
+                    style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: "clamp(40px,5vw,60px)" }}
+                  >
+                    {stat.val}
+                  </p>
+                  <p
+                    className="text-[14px] leading-[1.45] max-w-[220px]"
+                    style={{ color: "rgba(255,255,255,0.78)" }}
+                  >
+                    {stat.label}
+                  </p>
                 </div>
               </FadeIn>
             ))}
@@ -443,47 +629,64 @@ export default function Home() {
       </section>
 
       {/* WHERE WE WORK */}
-      <section className="py-24 px-6 bg-[#EDECEA]">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <section
+        className="py-24 px-8"
+        style={{ background: "#efeee7", borderBottom: "1px solid #efeee7" }}
+      >
+        <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-20 items-start">
           <FadeIn className="space-y-8">
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-0.5 bg-primary" />
-              <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-primary">WHERE WE WORK</p>
+            <div
+              className="inline-flex items-center gap-3 text-[11px] font-[800] tracking-[0.22em] uppercase"
+              style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#23258c" }}
+            >
+              <span style={{ width: 24, height: 2, background: "#23258c", display: "inline-block" }} />
+              Where we work
             </div>
-            <h2 className="text-4xl font-black text-primary leading-tight tracking-tight">
+            <h2
+              className="font-[800] leading-tight tracking-[-0.025em]"
+              style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: 44, color: "#0e0e1a" }}
+            >
               Rooted in Africa.<br />Working globally.
             </h2>
 
             <div className="space-y-0">
               {[
-                {
-                  region: "AFRICA",
-                  countries: "Nigeria · Ghana · Zambia · Rwanda · Tanzania · Kenya · Uganda",
-                },
-                {
-                  region: "EUROPE",
-                  countries: "United Kingdom · France",
-                },
-                {
-                  region: "NORTH AMERICA",
-                  countries: "United States · Canada",
-                },
+                { region: "AFRICA",        countries: "Nigeria · Ghana · Zambia · Rwanda · Tanzania · Kenya · Uganda" },
+                { region: "EUROPE",        countries: "United Kingdom · France" },
+                { region: "NORTH AMERICA", countries: "United States · Canada" },
               ].map((r) => (
-                <div key={r.region} className="py-4 border-t border-gray-300">
-                  <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#3B54D4] mb-1">
+                <div key={r.region} className="py-5" style={{ borderTop: "1px solid #c4c6d4" }}>
+                  <p
+                    className="text-[11px] font-[800] tracking-[0.22em] uppercase mb-2"
+                    style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#23258c" }}
+                  >
                     {r.region}
                   </p>
-                  <p className="text-gray-600 text-sm">{r.countries}</p>
+                  <p
+                    className="font-[500] text-[18px] leading-[1.5]"
+                    style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#0e0e1a" }}
+                  >
+                    {r.countries}
+                  </p>
                 </div>
               ))}
-              <div className="border-t border-gray-300" />
+              <div style={{ borderTop: "1px solid #c4c6d4" }} />
             </div>
 
-            <div className="bg-[#1A1A2E] text-white p-7 space-y-2">
-              <p className="text-[9px] uppercase tracking-[0.18em] font-bold text-gray-500">
-                STRATEGIC GOAL · 2030
+            <div
+              className="p-8 space-y-2"
+              style={{ background: "#0e0e1a", color: "#fff", borderLeft: "3px solid #a3651f" }}
+            >
+              <p
+                className="text-[11px] font-[800] tracking-[0.22em] uppercase mb-2.5"
+                style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "rgba(255,255,255,0.65)" }}
+              >
+                Strategic goal · 2030
               </p>
-              <p className="text-lg font-bold leading-tight">
+              <p
+                className="font-[800] leading-[1.3]"
+                style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: 22, color: "#fff" }}
+              >
                 15 African countries served with interoperable digital systems.
               </p>
             </div>
@@ -495,20 +698,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 px-6 bg-[#0F0F1A] text-white">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-12">
-          <h2 className="text-4xl md:text-5xl font-black leading-tight tracking-tight max-w-xl">
-            Building something that has to be right? Let's talk.
+      {/* CONTACT CTA */}
+      <section className="py-24 px-8" style={{ background: "#0e0e1a", color: "#fff" }}>
+        <div className="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-16 items-end">
+          <h2
+            className="font-[800] leading-[1.08] tracking-[-0.026em]"
+            style={{
+              fontFamily: "'Gilroy','Inter',sans-serif",
+              fontSize: "clamp(36px,4vw,48px)",
+              color: "#fff",
+              maxWidth: "18ch",
+            }}
+          >
+            Building something that has to be right?<br />Let's talk.
           </h2>
-          <div className="space-y-4 shrink-0">
+          <div className="flex flex-col gap-3 items-start">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 bg-[#B08835] text-white px-8 py-4 text-sm font-bold hover:bg-[#9A7628] transition-colors"
+              className="inline-flex items-center gap-2 text-white px-8 py-4 text-[13px] font-[800] rounded-[6px] transition-colors"
+              style={{ fontFamily: "'Gilroy','Inter',sans-serif", background: "#a3651f" }}
             >
-              Get in touch <ArrowRight size={16} />
+              Get in touch <ArrowRight size={15} />
             </Link>
-            <p className="text-gray-500 text-sm">info@getwrkr.com · +1 646 631 6118</p>
+            <p className="text-[13px]" style={{ color: "rgba(255,255,255,0.55)", fontFamily: "'JetBrains Mono',monospace" }}>
+              info@getwrkr.com · +1 646 631 6118
+            </p>
           </div>
         </div>
       </section>

@@ -1,132 +1,227 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Target, Zap, ShieldCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { FadeIn } from "@/components/fade-in";
 
 export default function AboutPage() {
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="pt-40 pb-24 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
+
+      {/* HERO */}
+      <section
+        className="px-8"
+        style={{ paddingTop: 112, paddingBottom: 64, background: "#f7f6f1", borderBottom: "1px solid #efeee7" }}
+      >
+        <div className="max-w-[1280px] mx-auto">
           <FadeIn>
-            <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-4">About</p>
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-primary mb-8 leading-[0.8]">
-              About <span className="text-[#1847F0]">WRKR.</span>
+            <div
+              className="inline-block mb-8 pl-4 text-[11px] font-[800] tracking-[0.28em] uppercase"
+              style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#23258c", borderLeft: "2px solid #23258c" }}
+            >
+              About
+            </div>
+            <h1
+              className="font-[800] leading-[1.05] tracking-[-0.028em] mb-6"
+              style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: "clamp(48px,6vw,64px)", color: "#0e0e1a", maxWidth: "18ch" }}
+            >
+              About WRKR
             </h1>
+            <p
+              className="text-[19px] leading-[1.6] max-w-[660px]"
+              style={{ color: "#3b3e5e" }}
+            >
+              WRKR Holding Co. invests in and builds the digital infrastructure that public agencies and regulated industries depend on. We operate at the intersection of public and private sectors — combining capital, technical depth, and on-the-ground implementation.
+            </p>
           </FadeIn>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <FadeIn delay={0.2}>
-              <p className="text-xl text-gray-600 leading-relaxed">
-                WRKR Holding Co. invests in and builds the digital infrastructure that public agencies and regulated industries depend on. We operate at the intersection of public and private sectors — combining capital, technical depth, and on-the-ground implementation.
-              </p>
-            </FadeIn>
-            <FadeIn delay={0.4}>
-              <div className="bg-[#F8F9FA] p-8 space-y-4">
-                <p className="text-sm font-bold uppercase tracking-widest text-primary">Our Mission</p>
-                <p className="text-lg font-medium text-primary leading-tight">
-                  To build the digital infrastructure that transforms how citizens access essential services and accelerates development across Africa.
+        </div>
+      </section>
+
+      {/* VISION & MISSION CARDS */}
+      <section className="py-20 px-8" style={{ background: "#f7f6f1", borderBottom: "1px solid #efeee7" }}>
+        <div className="max-w-[1280px] mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FadeIn>
+              <div className="p-10 space-y-4" style={{ background: "#fff", border: "1px solid #efeee7" }}>
+                <p
+                  className="text-[11px] font-[800] tracking-[0.22em] uppercase mb-4"
+                  style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#a3651f" }}
+                >
+                  Mission
                 </p>
+                <h3
+                  className="font-[800] leading-[1.25]"
+                  style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: 26, letterSpacing: "-0.018em", color: "#0e0e1a" }}
+                >
+                  Enable secure digital infrastructure that transforms how citizens access essential services and accelerates development across Africa.
+                </h3>
+              </div>
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <div className="p-10 space-y-4" style={{ background: "#fff", border: "1px solid #efeee7" }}>
+                <p
+                  className="text-[11px] font-[800] tracking-[0.22em] uppercase mb-4"
+                  style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#a3651f" }}
+                >
+                  Vision
+                </p>
+                <h3
+                  className="font-[800] leading-[1.25]"
+                  style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: 26, letterSpacing: "-0.018em", color: "#0e0e1a" }}
+                >
+                  Be Africa's trusted leader in building digital public infrastructure that works for everyone.
+                </h3>
               </div>
             </FadeIn>
           </div>
         </div>
       </section>
 
-      {/* Philosophy Section */}
-      <section className="py-24 px-6 bg-primary text-white">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-          <FadeIn className="space-y-8" direction="right">
-            <p className="text-[10px] uppercase tracking-widest text-accent font-bold">Our Philosophy</p>
-            <h2 className="text-4xl font-bold tracking-tighter leading-tight">A holding company — not a fund, not a consultancy. We build for the long arc.</h2>
-            <p className="text-gray-400 leading-relaxed">
-              Digital public infrastructure is the most consequential build of the next decade in Africa. Identity, payments, and the records that sit between citizens and their institutions are being built now — and the choices made today will shape governance, inclusion, and growth for thirty years.
-            </p>
-            <p className="text-gray-400 leading-relaxed">
-              We focus on regulated verticals — payments, identity, compliance, banking — because the cost of failure is high and the reward for getting it right is durable. These aren't winner-take-all categories. They're built piece by piece, market by market, by operators who stay.
-            </p>
-          </FadeIn>
-          <FadeIn className="bg-white/5 p-12 space-y-8 backdrop-blur-sm" direction="left">
-            <h3 className="text-2xl font-bold italic">"Be Africa's trusted leader in building digital public infrastructure that works for everyone."</h3>
-            <div className="pt-8 border-t border-white/10 flex justify-between items-center">
-              <p className="text-sm font-bold uppercase tracking-widest text-accent">Vision</p>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Timeline Section */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <FadeIn className="mb-16">
-            <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-2">Our Path</p>
-            <h2 className="text-4xl font-bold text-primary tracking-tighter">How we got here.</h2>
-          </FadeIn>
-
-          <div className="space-y-24">
-            {[
-              {
-                year: "2019 — 2022",
-                title: "Foundations.",
-                desc: "Launched government work with the Electronic Vehicle Administration System, processing tens of millions of transactions and increasing administrative efficiency by 120%. Established core partnerships with public agencies across Nigeria and built our first identity verification infrastructure."
-              },
-              {
-                year: "2023 — 2025",
-                title: "Building the portfolio.",
-                desc: "Founded Slice Finance (compliance & regulation, 2023), launched Orchestrate (digital payments, 2023), and built out our Four Layer stack. Expanded services to 26 state governments and 100+ companies across our markets."
-              },
-              {
-                year: "2026 + Future",
-                title: "Scaling proven solutions.",
-                desc: "Added Wavepoint to the portfolio (2026). Scaling proven infrastructure across multiple markets, deepening AI capabilities in compliance and financial services, and scaling cross-border digital integration. Goal: 15 African countries by 2030."
-              }
-            ].map((item, i) => (
-              <FadeIn key={i} className="grid grid-cols-1 lg:grid-cols-4 gap-8 border-t border-gray-100 pt-8">
-                <div className="lg:col-span-1">
-                  <p className="text-xl font-bold text-primary">{item.year}</p>
-                </div>
-                <div className="lg:col-span-3 space-y-4">
-                  <h4 className="text-3xl font-bold tracking-tight text-primary">{item.title}</h4>
-                  <p className="text-gray-500 leading-relaxed max-w-2xl">{item.desc}</p>
-                </div>
-              </FadeIn>
-            ))}
+      {/* OUR THESIS */}
+      <section
+        className="py-20 px-8"
+        style={{ background: "#fff", borderTop: "1px solid #efeee7", borderBottom: "1px solid #efeee7" }}
+      >
+        <div className="max-w-[1280px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-16 items-start">
+            <FadeIn>
+              <div
+                className="inline-flex items-center gap-3 text-[11px] font-[800] tracking-[0.22em] uppercase"
+                style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#23258c" }}
+              >
+                <span style={{ width: 24, height: 2, background: "#23258c", display: "inline-block" }} />
+                Our thesis
+              </div>
+            </FadeIn>
+            <FadeIn delay={0.1} className="space-y-6">
+              {[
+                "Digital public infrastructure is the most consequential build of the next decade in Africa. Identity, payments, and the records that sit between citizens and their institutions are being established now — and the choices made today will shape governance, inclusion, and growth for thirty years.",
+                "We focus on regulated verticals — payments, identity, compliance, banking — because the cost of failure is high and the reward for getting it right is durable. These aren't winner-take-all categories. They're built piece by piece, market by market, by operators who stay.",
+                "A holding-company structure — not a fund, not a consultancy — lets us be patient operators rather than transactional advisors. We hold, we support, we build alongside. Our companies run for decades, and so do we.",
+                "We look for operators who understand the constraints of public systems: uptime, security, regulatory compliance, local operability. We look for government partners who want a co-investor and co-builder, not a vendor.",
+              ].map((para, i) => (
+                <p
+                  key={i}
+                  className="text-[19px] leading-[1.7] max-w-[64ch]"
+                  style={{ fontFamily: "'Source Serif 4',Georgia,serif", color: "#0e0e1a" }}
+                >
+                  {para}
+                </p>
+              ))}
+            </FadeIn>
           </div>
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="py-24 px-6 bg-[#F8F9FA]">
-        <div className="max-w-7xl mx-auto">
-          <FadeIn className="mb-16">
-            <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-2">Values</p>
-            <h2 className="text-4xl font-bold text-primary tracking-tighter">What we hold ourselves to.</h2>
+      {/* TIMELINE */}
+      <section className="py-24 px-8" style={{ background: "#f7f6f1", borderBottom: "1px solid #efeee7" }}>
+        <div className="max-w-[1280px] mx-auto">
+          <FadeIn className="mb-10">
+            <div
+              className="inline-flex items-center gap-3 text-[11px] font-[800] tracking-[0.22em] uppercase mb-6"
+              style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#23258c" }}
+            >
+              <span style={{ width: 24, height: 2, background: "#23258c", display: "inline-block" }} />
+              Timeline
+            </div>
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div>
             {[
               {
-                title: "Financial stability.",
-                desc: "Government contracts and private sector revenue create stable cash flows that fund long-term work.",
-                icon: ShieldCheck
+                period: "2019 – 2023",
+                title:  "Foundations.",
+                body:   "Launched government work with the Electronic Vehicle Administration System, processing tens of millions in transactions and improving administrative efficiency by 120%. Established core partnerships with public agencies across Nigeria and built our first digital identity verification platform.",
               },
               {
-                title: "Performance.",
-                desc: "142% average portfolio government revenue growth, 89% reduction in local fraud implementations.",
-                icon: Zap
+                period: "2023 – 2025",
+                title:  "Building the portfolio.",
+                body:   "Founded Slice Finance (compliance & regulation, 2023), launched Orchestrate (digital payments, January 2025), and built out Piipul (digital identity). Expanded service to 26 state governments across Nigeria and 100+ companies across our markets.",
               },
               {
-                title: "Strategic goals.",
-                desc: "15 African countries by 2030, with expanded AI capabilities in compliance and financial inclusion.",
-                icon: Target
-              }
-            ].map((value, i) => (
-              <FadeIn key={value.title} delay={i * 0.1}>
-                <div className="bg-white p-10 h-full space-y-6 shadow-sm border border-gray-100">
-                  <div className="w-12 h-12 bg-primary/5 flex items-center justify-center rounded-lg">
-                    <value.icon className="text-primary" size={24} />
+                period: "2026 → Future",
+                title:  "Scaling proven solutions.",
+                body:   "Added Wavepoint to the portfolio in 2026. Scaling proven solutions into additional markets, deepening AI capabilities in compliance and financial inclusion, and creating cross-border digital integration. Goal: 15 African countries by 2030.",
+              },
+            ].map((item, i) => (
+              <FadeIn key={i}>
+                <div
+                  className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-12 py-8"
+                  style={{ borderTop: "1px solid #efeee7" }}
+                >
+                  <div
+                    className="font-[800] text-[18px] tracking-[-0.01em]"
+                    style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#23258c" }}
+                  >
+                    {item.period}
                   </div>
-                  <h4 className="text-xl font-bold text-primary">{value.title}</h4>
-                  <p className="text-sm text-gray-500 leading-relaxed">{value.desc}</p>
+                  <div className="space-y-3">
+                    <h4
+                      className="font-[800] text-[22px] tracking-[-0.014em]"
+                      style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#0e0e1a" }}
+                    >
+                      {item.title}
+                    </h4>
+                    <p className="text-[15px] leading-[1.6] max-w-[60ch]" style={{ color: "#3b3e5e" }}>
+                      {item.body}
+                    </p>
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+            <div style={{ borderTop: "1px solid #efeee7" }} />
+          </div>
+        </div>
+      </section>
+
+      {/* VALUES */}
+      <section className="py-24 px-8" style={{ background: "#efeee7", borderBottom: "1px solid #efeee7" }}>
+        <div className="max-w-[1280px] mx-auto">
+          <FadeIn className="mb-8">
+            <div
+              className="inline-flex items-center gap-3 text-[11px] font-[800] tracking-[0.22em] uppercase"
+              style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#23258c" }}
+            >
+              <span style={{ width: 24, height: 2, background: "#23258c", display: "inline-block" }} />
+              Values
+            </div>
+          </FadeIn>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+            {[
+              {
+                num:   "01",
+                title: "Financial Stability.",
+                body:  "Government contracts and private-sector revenue create stable cash flows that fund long-term work.",
+              },
+              {
+                num:   "02",
+                title: "Performance.",
+                body:  "68% faster processing times. 142% revenue growth for government partners. 89% reduction in fraud.",
+              },
+              {
+                num:   "03",
+                title: "Strategic Goals.",
+                body:  "15 African countries by 2030, with expanded AI capabilities in compliance and financial inclusion — built on a foundation of security and privacy.",
+              },
+            ].map((v, i) => (
+              <FadeIn key={v.num} delay={i * 0.08}>
+                <div
+                  className="flex flex-col gap-3.5 p-10"
+                  style={{ background: "#fff", border: "1px solid #efeee7" }}
+                >
+                  <p
+                    className="text-[12px] tracking-[0.1em]"
+                    style={{ fontFamily: "'JetBrains Mono',monospace", color: "#a3651f" }}
+                  >
+                    {v.num}
+                  </p>
+                  <h3
+                    className="font-[800] text-[22px] tracking-[-0.014em]"
+                    style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#0e0e1a" }}
+                  >
+                    {v.title}
+                  </h3>
+                  <p className="text-[15px] leading-[1.6]" style={{ color: "#3b3e5e" }}>
+                    {v.body}
+                  </p>
                 </div>
               </FadeIn>
             ))}
@@ -135,16 +230,24 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 bg-white text-center">
-        <FadeIn className="max-w-2xl mx-auto space-y-8">
-          <h3 className="text-4xl font-bold tracking-tighter text-primary">Join the mission.</h3>
-          <p className="text-gray-500">We are always looking for operators, engineers, and policy experts who want to build the future of African infrastructure.</p>
-          <Button size="lg" className="rounded-none px-12">
-            View open roles
-          </Button>
-        </FadeIn>
+      <section className="py-24 px-8" style={{ background: "#0e0e1a", color: "#fff" }}>
+        <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row md:items-center justify-between gap-12">
+          <h2
+            className="font-[800] leading-[1.08] tracking-[-0.026em]"
+            style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: "clamp(32px,4vw,48px)", maxWidth: "18ch" }}
+          >
+            Working on a national or sub-national DPI initiative?
+          </h2>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 text-white px-8 py-4 text-[13px] font-[800] rounded-[6px] transition-colors shrink-0"
+            style={{ fontFamily: "'Gilroy','Inter',sans-serif", background: "#a3651f" }}
+          >
+            Let's talk <ArrowRight size={15} />
+          </Link>
+        </div>
       </section>
+
     </div>
   );
 }
-
