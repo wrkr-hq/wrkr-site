@@ -1,8 +1,71 @@
 "use client";
 
 import { FadeIn } from "@/components/fade-in";
+import { useState } from "react";
+
+const inputStyle = {
+  fontFamily: "'Inter',sans-serif",
+  color: "#0e0e1a",
+  border: "1px solid #efeee7",
+  borderRadius: 4,
+  background: "#f7f6f1",
+};
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label
+        className="text-[11px] font-[800] tracking-[0.16em] uppercase"
+        style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#3b3e5e" }}
+      >
+        {label}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+function inputHandlers(set?: (v: string) => void) {
+  return {
+    onChange: set ? (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => set(e.target.value) : undefined,
+    onFocus: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      e.target.style.borderColor = "#23258c";
+      e.target.style.boxShadow = "0 0 0 3px rgba(35,37,140,0.18)";
+    },
+    onBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      e.target.style.borderColor = "#efeee7";
+      e.target.style.boxShadow = "";
+    },
+  };
+}
 
 export default function ContactPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [org, setOrg] = useState("");
+  const [reason, setReason] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, organization: org, reason, message }),
+      });
+      if (!res.ok) throw new Error("failed");
+      setStatus("success");
+      setName(""); setEmail(""); setOrg(""); setReason(""); setMessage("");
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  const sharedInput = "w-full px-3.5 py-2.5 text-[14px] outline-none transition-all";
+
   return (
     <div className="flex flex-col">
 
@@ -96,151 +159,100 @@ export default function ContactPage() {
           {/* Right — form */}
           <FadeIn delay={0.1}>
             <form
+              onSubmit={handleSubmit}
               className="p-8 space-y-5"
               style={{ background: "#fff", border: "1px solid #efeee7" }}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="flex flex-col gap-1.5">
-                  <label
-                    className="text-[11px] font-[800] tracking-[0.16em] uppercase"
-                    style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#3b3e5e" }}
-                  >
-                    Full name
-                  </label>
+                <Field label="Full name">
                   <input
                     type="text"
                     placeholder="Jane Doe"
-                    className="w-full px-3.5 py-2.5 text-[14px] outline-none transition-all"
-                    style={{
-                      fontFamily: "'Inter',sans-serif",
-                      color: "#0e0e1a",
-                      border: "1px solid #efeee7",
-                      borderRadius: 4,
-                      background: "#f7f6f1",
-                    }}
-                    onFocus={(e) => { e.target.style.borderColor = "#23258c"; e.target.style.boxShadow = "0 0 0 3px rgba(35,37,140,0.18)"; }}
-                    onBlur={(e)  => { e.target.style.borderColor = "#efeee7"; e.target.style.boxShadow = ""; }}
+                    required
+                    value={name}
+                    className={sharedInput}
+                    style={inputStyle}
+                    {...inputHandlers(setName)}
                   />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label
-                    className="text-[11px] font-[800] tracking-[0.16em] uppercase"
-                    style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#3b3e5e" }}
-                  >
-                    Email
-                  </label>
+                </Field>
+                <Field label="Email">
                   <input
                     type="email"
                     placeholder="jane@example.com"
-                    className="w-full px-3.5 py-2.5 text-[14px] outline-none transition-all"
-                    style={{
-                      fontFamily: "'Inter',sans-serif",
-                      color: "#0e0e1a",
-                      border: "1px solid #efeee7",
-                      borderRadius: 4,
-                      background: "#f7f6f1",
-                    }}
-                    onFocus={(e) => { e.target.style.borderColor = "#23258c"; e.target.style.boxShadow = "0 0 0 3px rgba(35,37,140,0.18)"; }}
-                    onBlur={(e)  => { e.target.style.borderColor = "#efeee7"; e.target.style.boxShadow = ""; }}
+                    required
+                    value={email}
+                    className={sharedInput}
+                    style={inputStyle}
+                    {...inputHandlers(setEmail)}
                   />
-                </div>
+                </Field>
               </div>
 
-              <div className="flex flex-col gap-1.5">
-                <label
-                  className="text-[11px] font-[800] tracking-[0.16em] uppercase"
-                  style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#3b3e5e" }}
-                >
-                  Organization
-                </label>
+              <Field label="Organization">
                 <input
                   type="text"
                   placeholder="Your organization"
-                  className="w-full px-3.5 py-2.5 text-[14px] outline-none transition-all"
-                  style={{
-                    fontFamily: "'Inter',sans-serif",
-                    color: "#0e0e1a",
-                    border: "1px solid #efeee7",
-                    borderRadius: 4,
-                    background: "#f7f6f1",
-                  }}
-                  onFocus={(e) => { e.target.style.borderColor = "#23258c"; e.target.style.boxShadow = "0 0 0 3px rgba(35,37,140,0.18)"; }}
-                  onBlur={(e)  => { e.target.style.borderColor = "#efeee7"; e.target.style.boxShadow = ""; }}
+                  value={org}
+                  className={sharedInput}
+                  style={inputStyle}
+                  {...inputHandlers(setOrg)}
                 />
-              </div>
+              </Field>
 
-              <div className="flex flex-col gap-1.5">
-                <label
-                  className="text-[11px] font-[800] tracking-[0.16em] uppercase"
-                  style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#3b3e5e" }}
-                >
-                  What brings you here?
-                </label>
+              <Field label="What brings you here?">
                 <select
-                  className="w-full px-3.5 py-2.5 text-[14px] outline-none transition-all"
-                  style={{
-                    fontFamily: "'Inter',sans-serif",
-                    color: "#0e0e1a",
-                    border: "1px solid #efeee7",
-                    borderRadius: 4,
-                    background: "#f7f6f1",
-                    appearance: "none",
-                  }}
-                  onFocus={(e) => { e.target.style.borderColor = "#23258c"; e.target.style.boxShadow = "0 0 0 3px rgba(35,37,140,0.18)"; }}
-                  onBlur={(e)  => { e.target.style.borderColor = "#efeee7"; e.target.style.boxShadow = ""; }}
+                  value={reason}
+                  className={sharedInput}
+                  style={{ ...inputStyle, appearance: "none" }}
+                  {...inputHandlers(setReason)}
                 >
                   <option value="">Select one…</option>
-                  <option value="government">Government partnership</option>
-                  <option value="portfolio">Portfolio / operator</option>
-                  <option value="coinvest">Co-investment</option>
-                  <option value="other">Other</option>
+                  <option value="Government partnership">Government partnership</option>
+                  <option value="Portfolio / operator">Portfolio / operator</option>
+                  <option value="Co-investment">Co-investment</option>
+                  <option value="Other">Other</option>
                 </select>
-              </div>
+              </Field>
 
-              <div className="flex flex-col gap-1.5">
-                <label
-                  className="text-[11px] font-[800] tracking-[0.16em] uppercase"
-                  style={{ fontFamily: "'Gilroy','Inter',sans-serif", color: "#3b3e5e" }}
-                >
-                  Message
-                </label>
+              <Field label="Message">
                 <textarea
                   rows={4}
                   placeholder="Briefly describe what you're working on…"
-                  className="w-full px-3.5 py-2.5 text-[14px] outline-none transition-all resize-vertical"
-                  style={{
-                    fontFamily: "'Inter',sans-serif",
-                    color: "#0e0e1a",
-                    border: "1px solid #efeee7",
-                    borderRadius: 4,
-                    background: "#f7f6f1",
-                    minHeight: 110,
-                  }}
-                  onFocus={(e) => { e.target.style.borderColor = "#23258c"; e.target.style.boxShadow = "0 0 0 3px rgba(35,37,140,0.18)"; }}
-                  onBlur={(e)  => { e.target.style.borderColor = "#efeee7"; e.target.style.boxShadow = ""; }}
+                  required
+                  value={message}
+                  className={`${sharedInput} resize-vertical`}
+                  style={{ ...inputStyle, minHeight: 110 }}
+                  {...inputHandlers(setMessage)}
                 />
-              </div>
+              </Field>
 
               <div className="flex items-center gap-4 pt-2">
                 <button
                   type="submit"
-                  className="flex-1 py-3.5 text-[13px] font-[800] text-white rounded-[6px] transition-colors"
-                  style={{
-                    fontFamily: "'Gilroy','Inter',sans-serif",
-                    background: "#23258c",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = "#1c1d70")}
+                  disabled={status === "loading" || status === "success"}
+                  className="flex-1 py-3.5 text-[13px] font-[800] text-white rounded-[6px] transition-colors disabled:opacity-60"
+                  style={{ fontFamily: "'Gilroy','Inter',sans-serif", background: "#23258c" }}
+                  onMouseEnter={(e) => { if (status === "idle" || status === "error") e.currentTarget.style.background = "#1c1d70"; }}
                   onMouseLeave={(e) => (e.currentTarget.style.background = "#23258c")}
                 >
-                  Send message →
+                  {status === "loading" ? "Sending…" : status === "success" ? "Sent!" : "Send message →"}
                 </button>
               </div>
-              <p
-                className="text-[11px] text-center tracking-[0.12em] uppercase"
-                style={{ color: "#6b6e88" }}
-              >
-                We respond within 24 hours.
-              </p>
+
+              {status === "error" && (
+                <p className="text-[12px] text-center" style={{ color: "#c0392b" }}>
+                  Something went wrong. Please try again or email us directly.
+                </p>
+              )}
+
+              {status !== "error" && (
+                <p
+                  className="text-[11px] text-center tracking-[0.12em] uppercase"
+                  style={{ color: "#6b6e88" }}
+                >
+                  We respond within 24 hours.
+                </p>
+              )}
             </form>
           </FadeIn>
         </div>
