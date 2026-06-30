@@ -14,17 +14,24 @@ const navLinks = [
   { name: "Contact",   href: "/contact" },
 ];
 
-function Mark({ size = 28, color = "currentColor" }: { size?: number; color?: string }) {
+function Mark({ height = 22, color = "currentColor" }: { height?: number; color?: string }) {
+  // WRKR brand mark — smile curve + dot. viewBox fitted to the artwork ink box.
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" fill="none" aria-hidden="true">
+    <svg
+      height={height}
+      width={height * (425 / 176)}
+      viewBox="547 1084 425 176"
+      fill={color}
+      aria-hidden="true"
+    >
       <path
-        d="M14 14 L14 36 C14 46 22 52 32 52 C42 52 50 46 50 36 L50 14"
-        stroke={color}
-        strokeWidth="6"
-        strokeLinecap="square"
-        fill="none"
+        d="m 0,0 0.036,-41.136 c -15.986,6.842 -30.048,18.049 -42.073,33.621 -22.755,-27.9 -50.054,-41.863 -81.729,-41.89 -27.879,-0.025 -51.345,9.475 -70.344,28.441 -21.608,21.513 -32.397,48.758 -32.426,81.735 l 41.817,0.037 c 0.022,-25.382 7.01,-44.985 21.017,-58.912 11.4,-11.435 24.72,-17.09 39.906,-17.077 15.242,0.013 28.553,5.692 39.933,17.147 13.926,13.951 20.88,33.565 20.857,58.948 l 41.818,0.036 C -21.165,34.32 -14.802,14.662 -2.098,2.037 -1.417,1.36 -0.681,0.68 0,0"
+        transform="matrix(1.3333333,0,0,-1.3333333,859.43813,1184.0104)"
       />
-      <circle cx="50" cy="14" r="5" fill={color} />
+      <path
+        d="m 0,0 c 0.391,-17.091 -13.146,-31.264 -30.238,-31.655 -17.091,-0.391 -31.263,13.146 -31.655,30.238 -0.392,17.091 13.146,31.263 30.238,31.655 C -14.564,30.629 -0.392,17.091 0,0"
+        transform="matrix(1.3333333,0,0,-1.3333333,961.93493,1134.9993)"
+      />
     </svg>
   );
 }
@@ -33,8 +40,8 @@ function WrkrLogo({ dark = false }: { dark?: boolean }) {
   const indigo = "#23258c";
   const color = dark ? "#ffffff" : indigo;
   return (
-    <Link href="/" className="inline-flex items-center gap-3" aria-label="WRKR — home">
-      <Mark size={26} color={color} />
+    <Link href="/" className="inline-flex items-center gap-3" aria-label="WRKR Holding Co. — home">
+      <Mark height={24} color={color} />
       <div className="flex flex-col leading-none">
         <span
           className="text-[18px] font-[800] tracking-[-0.02em]"
