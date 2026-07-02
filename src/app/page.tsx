@@ -266,14 +266,16 @@ export default function Home() {
                   className="font-[800] leading-[1.04] tracking-[-0.028em] mb-8"
                   style={{
                     fontFamily: "'Gilroy','Inter',sans-serif",
-                    fontSize: "clamp(52px,6.5vw,76px)",
+                    fontSize: "clamp(34px,8vw,76px)",
                     color: "#0e0e1a",
                     maxWidth: "18ch",
+                    overflowWrap: "break-word",
+                    hyphens: "auto",
                   }}
                 >
                   We build{" "}
                   <em style={{ fontStyle: "normal", color: "#23258c" }}>
-                    digital&nbsp;infrastructure
+                    digital infrastructure
                   </em>{" "}
                   for the institutions that hold society together.
                 </h1>
@@ -427,7 +429,7 @@ export default function Home() {
             </div>
             <h2
               className="font-[800] leading-[1.05] tracking-[-0.025em]"
-              style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: 44, color: "#0e0e1a" }}
+              style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: "clamp(30px,6vw,44px)", color: "#0e0e1a" }}
             >
               Four layers.<br />Built to interoperate.
             </h2>
@@ -459,7 +461,7 @@ export default function Home() {
               </div>
               <h2
                 className="font-[800] tracking-[-0.025em]"
-                style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: 44, color: "#0e0e1a" }}
+                style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: "clamp(30px,6vw,44px)", color: "#0e0e1a" }}
               >
                 Four operators. One thesis.
               </h2>
@@ -644,7 +646,7 @@ export default function Home() {
             </div>
             <h2
               className="font-[800] leading-tight tracking-[-0.025em]"
-              style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: 44, color: "#0e0e1a" }}
+              style={{ fontFamily: "'Gilroy','Inter',sans-serif", fontSize: "clamp(30px,6vw,44px)", color: "#0e0e1a" }}
             >
               Rooted in Africa.<br />Working globally.
             </h2>
